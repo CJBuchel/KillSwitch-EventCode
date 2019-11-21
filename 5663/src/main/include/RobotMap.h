@@ -66,10 +66,10 @@ struct RobotMap {
 
 
   struct Elevator {
-    curtinfrc::VictorSpx liftSpx1{ 5 };
+    curtinfrc::VictorSpx liftSpx1{ 12 };// not needed for 5663
     curtinfrc::TalonSrx liftSrx1{ 6 };
-    curtinfrc::TalonSrx liftSrx2{ 7 };
-    curtinfrc::VictorSpx liftSpx2{ 8 };
+    curtinfrc::TalonSrx liftSrx2{ 11 };
+    curtinfrc::VictorSpx liftSpx2{ 13 }; // not needed for 5663
     curtinfrc::actuators::MotorVoltageController liftMotors = curtinfrc::actuators::MotorVoltageController::Group(liftSpx1, liftSrx1, liftSrx2, liftSpx2);
 
     curtinfrc::sensors::DigitalEncoder liftEncoder{ 2, 3, 2048 };
