@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "type_traits": "cpp"
+    },
+    "C_Cpp.default.configurationProvider": "vscode-wpilib",
+    "java.configuration.updateBuildConfiguration": "automatic"
+}
