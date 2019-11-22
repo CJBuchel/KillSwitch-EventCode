@@ -49,11 +49,11 @@ class Robot : public frc::TimedRobot, protected curtinfrc::StrategyController, p
   frc::XboxController *xbox1;
 
   curtinfrc::TalonSrx *FlipperSRX1, *FlipperSRX2;
+  curtinfrc::VictorSpx *Spinner;
 
-  //curtinfrc::TalonSrx *HatchMech;
+  curtinfrc::TalonSrx *HatchMech;
 
   curtinfrc::TalonSrx *DriveMotorLeftSRX, *DriveMotorRightSRX;
-
   curtinfrc::VictorSpx *DriveMotorLeftSPX, *DriveMotorRightSPX;
 
   bool enableFOC = false;

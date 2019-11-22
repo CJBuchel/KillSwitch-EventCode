@@ -78,8 +78,6 @@ void Robot::RobotPeriodic() {
 
 
 
-  
-
   robotmap.controlSystem.compressor.SetTarget(actuators::BinaryActuatorState::kForward);
   robotmap.controlSystem.compressor.Update(dt);
 
@@ -98,8 +96,11 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
-  // You may be wondering why i am using teleop periodic now...
-  // well basically. fuck you
+
+  if (robotmap.contGroup.Get(ControlMap::raiseFlipper)) {
+    //
+  }
+
   if (xbox1->GetYButton()) {
     FlipperSRX1->Set(0.3);
   } else if (xbox1->GetAButton()) {

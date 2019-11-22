@@ -27,8 +27,11 @@ void Robot::RobotInit() {
   FlipperSRX1 = new curtinfrc::TalonSrx(6);
   FlipperSRX2 = new curtinfrc::TalonSrx(11);
 
+  // Spinner
+  Spinner = new curtinfrc::VictorSpx(8);
+
   // hatch
-  //HatchMech - new curtinfrc::TalonSrx(1);
+  HatchMech = new curtinfrc::TalonSrx(1);
 
   // left drive
   DriveMotorLeftSRX = new curtinfrc::TalonSrx(2);
@@ -47,6 +50,7 @@ void Robot::RobotInit() {
   FlipperSRX1->ZeroEncoder();
   FlipperSRX2->ZeroEncoder();
   //HatchMech->ZeroEncoder();
+  //
 }
 
 
@@ -84,26 +88,14 @@ void Robot::TeleopPeriodic() {
     DriveMotorRightSPX->Set(rightY);
   }
 
-  // Cargo
-  // if (xbox1->GetYButton()) {
-  //   FlipperSRX1->Set(-0.3);
-  //   FlipperSRX2->Set(-0.3);
-  // } else if (xbox1->GetAButton()) {
-  //   FlipperSRX1->Set(0.3);
-  //   FlipperSRX2->Set(0.3);
-  // } else {
-  //   FlipperSRX1->Set(0);
-  //   FlipperSRX2->Set(0);
-  // }
-
   // Hatch
-  // if (xbox1->GetAButton()) {
-  //   HatchMech->Set(-0.3);
-  // } else if (xbox1->GetBButton()) {
-  //   HatchMech->Set(-0.3);
-  // } else {
-  //   HatchMech->Set(0);
-  // }
+  if (xbox1->GetAButton()) {
+    HatchMech->Set(-0.3);
+  } else if (xbox1->GetBButton()) {
+    HatchMech->Set(-0.3);
+  } else {
+    HatchMech->Set(0);
+  }
   
 
   // Cargo
@@ -127,11 +119,23 @@ void Robot::TeleopPeriodic() {
       FlipperSRX2->Set(0);
     }
   }
-  
-  
-  
-  
-  
+
+  // Cargo Spinner
+  if (xbox1->GetPOV(0)) {
+    Spinner->Set(0.5);
+  } else if (xbox1->GetPOV(180)) {
+    Spinner->Set(-0.5);
+  } else {
+    Spinner->Set(0);
+  }
+
+  if (xbox1->GetBButton()) {
+    xbox1->SetRumble(xbox1->kLeftRumble, 1); // or XboxController::kLeftRumble
+    xbox1->SetRumble(xbox1->kRightRumble, 1);
+  } else {
+    xbox1->SetRumble(xbox1->kLeftRumble, 0);
+    xbox1->SetRumble(xbox1->kRightRumble, 0);
+  }
 }
 
 void Robot::TestInit() {}
