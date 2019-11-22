@@ -20,20 +20,33 @@ using hand = frc::XboxController::JoystickHand;
 double lastTimestamp;
 
 void Robot::RobotInit() {
-
+  // contoller
   xbox1 = new frc::XboxController(0);
 
-  // flipper
+  // cargo
   FlipperSRX1 = new curtinfrc::TalonSrx(6);
   FlipperSRX2 = new curtinfrc::TalonSrx(11);
 
-  // left
+  // hatch
+  //HatchMech - new curtinfrc::TalonSrx(1);
+
+  // left drive
   DriveMotorLeftSRX = new curtinfrc::TalonSrx(2);
   DriveMotorLeftSPX = new curtinfrc::VictorSpx(3);
 
-  // right
+  // right drive
   DriveMotorRightSRX = new curtinfrc::TalonSrx(5);
   DriveMotorRightSPX = new curtinfrc::VictorSpx(4);
+
+
+
+  // ----Zero Encorder-----
+
+  DriveMotorLeftSRX->ZeroEncoder();
+  DriveMotorRightSRX->ZeroEncoder();
+  FlipperSRX1->ZeroEncoder();
+  FlipperSRX2->ZeroEncoder();
+  //HatchMech->ZeroEncoder();
 }
 
 
@@ -71,20 +84,50 @@ void Robot::TeleopPeriodic() {
     DriveMotorRightSPX->Set(rightY);
   }
 
-  // Flipper
+  // Cargo
+  // if (xbox1->GetYButton()) {
+  //   FlipperSRX1->Set(-0.3);
+  //   FlipperSRX2->Set(-0.3);
+  // } else if (xbox1->GetAButton()) {
+  //   FlipperSRX1->Set(0.3);
+  //   FlipperSRX2->Set(0.3);
+  // } else {
+  //   FlipperSRX1->Set(0);
+  //   FlipperSRX2->Set(0);
+  // }
 
-  if (xbox1->GetYButton()) {
-    FlipperSRX1->Set(-0.3);
-    FlipperSRX2->Set(-0.3);
-  } else if (xbox1->GetAButton()) {
-    FlipperSRX1->Set(0.3);
-    FlipperSRX2->Set(0.3);
-  } else {
-    FlipperSRX1->Set(0);
-    FlipperSRX2->Set(0);
+  // Hatch
+  // if (xbox1->GetAButton()) {
+  //   HatchMech->Set(-0.3);
+  // } else if (xbox1->GetBButton()) {
+  //   HatchMech->Set(-0.3);
+  // } else {
+  //   HatchMech->Set(0);
+  // }
+  
+
+  // Cargo
+  double leftTrigger = xbox1->GetTriggerAxis(hand::kLeftHand);
+  double rightTrigger = xbox1->GetTriggerAxis(hand::kRightHand);
+  double deadzone = 0.05;
+  if (leftTrigger > deadzone) {
+    if (xbox1->GetTriggerAxis(hand::kLeftHand)) {
+      FlipperSRX1->Set(-leftTrigger/3);
+      FlipperSRX2->Set(-leftTrigger/3);
+    } else {
+      FlipperSRX1->Set(0);
+      FlipperSRX2->Set(0);
+    }
+  } else if (rightTrigger > deadzone) {
+    if (xbox1->GetTriggerAxis(hand::kRightHand)) {
+      FlipperSRX1->Set(rightTrigger/6);
+      FlipperSRX2->Set(rightTrigger/6);
+    } else {
+      FlipperSRX1->Set(0);
+      FlipperSRX2->Set(0);
+    }
   }
-
- 
+  
   
   
   

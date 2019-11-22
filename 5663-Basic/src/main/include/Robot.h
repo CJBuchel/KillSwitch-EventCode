@@ -50,6 +50,8 @@ class Robot : public frc::TimedRobot, protected curtinfrc::StrategyController, p
 
   curtinfrc::TalonSrx *FlipperSRX1, *FlipperSRX2;
 
+  //curtinfrc::TalonSrx *HatchMech;
+
   curtinfrc::TalonSrx *DriveMotorLeftSRX, *DriveMotorRightSRX;
 
   curtinfrc::VictorSpx *DriveMotorLeftSPX, *DriveMotorRightSPX;
