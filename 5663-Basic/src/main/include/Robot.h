@@ -10,19 +10,23 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <networktables/NetworkTableInstance.h>
 
-#include "RobotMap.h"
 #include "strategy/StrategyController.h"
 #include "NTProvider.h"
+#include "CurtinCtre.h"
+#include "controllers/CurtinControllers.h"
+#include "Gearbox.h"
+#include "actuators/BinaryServo.h"
+#include "actuators/Compressor.h"
+#include "actuators/DoubleSolenoid.h"
+#include "actuators/VoltageController.h"
+#include "sensors/Encoder.h"
+#include "sensors/LimitSwitch.h"
+#include "sensors/NavX.h"
+#include "sensors/PressureSensor.h"
 
 #include "Toggle.h"
 
 #include "Drivetrain.h"
-#include "Lift.h"
-#include "HatchIntake.h"
-#include "BoxIntake.h"
-//#include "Cargo.h"
-
-#include "strategies/DriveStrategies.h"
 
 class Robot : public frc::TimedRobot, protected curtinfrc::StrategyController, protected curtinfrc::NTProvider {
  public:
@@ -40,23 +44,17 @@ class Robot : public frc::TimedRobot, protected curtinfrc::StrategyController, p
   void TestInit() override;
   void TestPeriodic() override;
 
-
-  RobotMap robotmap;
-
   curtinfrc::Drivetrain *drivetrain;
 
   frc::XboxController *xbox1;
 
   curtinfrc::TalonSrx *FlipperSRX1, *FlipperSRX2;
 
+  curtinfrc::TalonSrx *DriveMotorLeftSRX, *DriveMotorRightSRX;
 
-  HatchIntake *sideHatchIntake /*, *frontHatchIntake*/;
+  curtinfrc::VictorSpx *DriveMotorLeftSPX, *DriveMotorRightSPX;
 
-
-  BoxIntake *boxIntake;
-
-
-  Lift *beElevator;
+  bool enableFOC = false;
+ 
   curtinfrc::Toggle fallToggle;
-
 };

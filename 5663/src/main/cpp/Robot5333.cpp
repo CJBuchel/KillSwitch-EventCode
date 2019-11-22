@@ -1,6 +1,7 @@
 #include "Robot5333.h"
 #include "ControlMap.h"
 #include "strategy/MPStrategy.h"
+#include "RobotMap.h"
 
 #include <math.h>
 #include <iostream>
@@ -14,6 +15,7 @@ using namespace curtinfrc;
 
 double lastTimestamp;
 
+
 void Robot::RobotInit() {
   lastTimestamp = Timer::GetFPGATimestamp();
   ControlMap::InitSmartControllerGroup(robotmap.contGroup);
@@ -23,6 +25,13 @@ void Robot::RobotInit() {
   cameraFront.SetFPS(30);
 
   cameraFront.SetResolution(160, 120);
+
+  //cargo = new Cargo(6,11,8);
+
+  xbox1 = new frc::XboxController(0);
+
+  FlipperSRX1 = new curtinfrc::TalonSrx(6);
+  FlipperSRX2 = new curtinfrc::TalonSrx(11);
 
   // Our motors are mounted backwards, but the simulation doesn't know about that.
 #ifdef __FRC_ROBORIO__
@@ -42,13 +51,6 @@ void Robot::RobotInit() {
   drivetrain->SetDefault(std::make_shared<DrivetrainManualStrategy>(*drivetrain, *beElevator, robotmap.contGroup));
   drivetrain->StartLoop(100);
 
-  // sideHatchIntake = new HatchIntake(robotmap.sideHatchIntake.config);
-  // sideHatchIntake->SetDefault(std::make_shared<HatchIntakeManualStrategy>(*sideHatchIntake, robotmap.contGroup, true));
-  // sideHatchIntake->StartLoop(50);
-
-  // frontHatchIntake = new HatchIntake(robotmap.frontHatchIntake.config);
-  // frontHatchIntake->SetDefault(std::make_shared<HatchIntakeManualStrategy>(*frontHatchIntake, robotmap.contGroup, false));
-  // frontHatchIntake->StartLoop(50);
 
   boxIntake = new BoxIntake(robotmap.boxIntake.config);
   boxIntake->SetDefault(std::make_shared<BoxIntakeManualStrategy>(*boxIntake, robotmap.contGroup));
@@ -56,8 +58,6 @@ void Robot::RobotInit() {
 
   StrategyController::Register(drivetrain);
   StrategyController::Register(beElevator);
-  // StrategyController::Register(sideHatchIntake);
-  // StrategyController::Register(frontHatchIntake);
   StrategyController::Register(boxIntake);
 
 
@@ -65,8 +65,6 @@ void Robot::RobotInit() {
 
   NTProvider::Register(drivetrain);
   NTProvider::Register(beElevator);
-  // NTProvider::Register(sideHatchIntake);
-  // NTProvider::Register(frontHatchIntake);
   NTProvider::Register(boxIntake);
 }
 
@@ -82,8 +80,7 @@ void Robot::RobotPeriodic() {
 
   
 
-  // if (robotmap.contGroup.Get(ControlMap::compressorOn, controllers::Controller::ONRISE)) 
-    robotmap.controlSystem.compressor.SetTarget(actuators::BinaryActuatorState::kForward);
+  robotmap.controlSystem.compressor.SetTarget(actuators::BinaryActuatorState::kForward);
   robotmap.controlSystem.compressor.Update(dt);
 
   StrategyController::Update(dt);
@@ -101,6 +98,14 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
+  // You may be wondering why i am using teleop periodic now...
+  // well basically. fuck you
+  if (xbox1->GetYButton()) {
+    FlipperSRX1->Set(0.3);
+  } else if (xbox1->GetAButton()) {
+    FlipperSRX2->Set(-0.3);
+  }
+  
 }
 
 void Robot::TestInit() {}

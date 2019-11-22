@@ -27,6 +27,10 @@ class ControlMap {
   static const double drivetrainForwardThrottle;
   static const double drivetrainTurnThrottle;
 
+  // CargoFlipper JOYMAP
+  static const std::vector<curtinfrc::controllers::tButton> raiseFlipper;
+  static const std::vector<curtinfrc::controllers::tButton> lowerFlipper;
+
 
   // BEELEVATOR JOYMAP
   static const std::vector<curtinfrc::controllers::tButton> raiseLift;
