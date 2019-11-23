@@ -1,2 +1,1 @@
-ext.team = 5663
 apply from: rootProject.file('teams.gradle')
