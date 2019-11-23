@@ -24,9 +24,13 @@ const double ControlMap::drivetrainMinThrottle       = 0.3;
 const double ControlMap::drivetrainForwardThrottle   = -0.9;
 const double ControlMap::drivetrainTurnThrottle      = -0.6;
 
+// CargoFlipper JOYMAP
+const std::vector<tButton> ControlMap::raiseFlipper{ { 1, XboxController::kY } };
+const std::vector<tButton> ControlMap::lowerFlipper{ { 1, XboxController::kA } };
+
 // BEELEVATOR JOYMAP
-const std::vector<tButton> ControlMap::raiseLift{ { 1, XboxController::kA }, { 2, 20 } };
-const std::vector<tButton> ControlMap::lowerLift{ { 1, XboxController::kB } };
+const std::vector<tButton> ControlMap::raiseLift{ { 2, XboxController::kA }, { 2, 20 } };
+const std::vector<tButton> ControlMap::lowerLift{ { 2, XboxController::kB } };
 
 const std::vector<tButton> ControlMap::liftGoalGround{ { 1, 28 } };
 const std::vector<tButton> ControlMap::liftGoalLower1{ { 2, 11 } };
